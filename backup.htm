@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generate Baseball Bat Images per Conditions</title>
+    <title>Baseball Bat Image Generator</title>
+    <meta charset="utf-8" />
     <link rel="icon" type="image/x-icon" href="./favicon.png" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <link rel="stylesheet" href="./assets/css/examples.css" />
 </head>
-
 <body>
 
     <nav class="navbar" style="background-color: #000000">
@@ -22,73 +18,46 @@
         </div>
     </nav>
 
-    <div>Type conditions here:</div>
+    <div>Type baseball bat conditions here:</div>
+    <form id="bat-form">
+        <div>
+            <label for="length">Length:</label>
+            <input type="text" id="length" name="length" style="border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" style="border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label for="material">Material:</label>
+            <select id="material" name="material" style="border: 1px solid #ccc;">
+                <option value="metal">Metal</option>
+                <option value="wood">Wood</option>
+            </select>
+        </div>
+        <div>
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" style="border: 1px solid #ccc;" />
+        </div>
+        <!-- Add more input fields for additional parameters -->
+    </form>
 
-    <table>
+    <button id="generate-btn" py-click="generateImage()" class="py-button">Generate Image</button>
 
-        <tr>
-            <td>Length (inches)</td>
-            <td><input type="text" style="border:3px solid #F7730E;" value="0" id="lengthInput" /></td>
+    <div id="image-container"></div>
 
-            <td>Weight (ounces)</td>
-            <td><input type="text" style="border:3px solid #F7730E;" value="0" id="weightInput" /></td>
-
-            <td>Material</td>
-            <td><input type="text" style="border:3px solid #F7730E;" value="Wood" id="materialInput" /></td>
-        </tr>
-
-    </table>
-
-    <button id="generateImage" py-click="generateBaseballBatImage()" class="py-button">Generate Image</button>
-
-    <p id="generatedImage"></p>
-
-    <section class="pyscript">
+    <section class="pyscript"> 
         <div id="mpl"></div>
-
         <py-config>
             packages = [
-              "matplotlib",
-              "pandas",
+                "matplotlib",
+                "pandas",
             ]
             plugins = [
-              "https://pyscript.net/latest/plugins/python/py_tutor.py"
+                "https://pyscript.net/latest/plugins/python/py_tutor.py"
             ]
         </py-config>
-
-        <script type="py">
-            import matplotlib.pyplot as plt
-            import numpy as np
-            from pyodide.http import open_url
-            from js import console
-
-            def generateBaseballBatImage():
-                length = float(Element('lengthInput').element.value)
-                weight = float(Element('weightInput').element.value)
-                material = Element('materialInput').element.value
-
-                # Generate image based on input conditions
-                # Example code to generate a placeholder image
-                image = np.random.rand(100, 100)
-
-                fig, ax = plt.subplots()
-                ax.imshow(image, cmap='gray')
-                ax.set_title(f'Baseball Bat ({length} inches, {weight} ounces, Material: {material})')
-                plt.axis('off')
-
-                # Convert matplotlib figure to base64 encoded image
-                import io
-                buf = io.BytesIO()
-                fig.savefig(buf, format='png')
-                buf.seek(0)
-                image_data = buf.getvalue()
-                encoded_image = f"data:image/png;base64,{buf}"
-
-                # Display the generated image on the webpage
-                Element('generatedImage').element.innerHTML = f'<img src="{encoded_image}">'
-        </script>
     </section>
 
 </body>
-
 </html>
