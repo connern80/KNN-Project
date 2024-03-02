@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./assets/css/examples.css" />
 </head>
 <body>
+
     <nav class="navbar" style="background-color: #000000">
         <div class="app-header">
             <a href="">
@@ -18,23 +19,35 @@
     </nav>
 
     <div>Type baseball bat conditions here:</div>
-    <table>
-        <tr>
-            <td>Length</td>
-            <td><input type="text" style="border:3px solid #F7730E;" value="0" id="lengthInput" /></td>
-            <td>Weight</td>
-            <td><input type="text" style="border:3px solid #F7730E;" value="0" id="weightInput" /></td>
-            <!-- Add more input fields for other conditions like material, handle type, etc. -->
-        </tr>
-    </table>
+    <form id="bat-form">
+        <div>
+            <label for="length">Length:</label>
+            <input type="text" id="length" name="length" style="border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label for="weight">Weight:</label>
+            <input type="text" id="weight" name="weight" style="border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label for="material">Material:</label>
+            <select id="material" name="material" style="border: 1px solid #ccc;">
+                <option value="metal">Metal</option>
+                <option value="wood">Wood</option>
+            </select>
+        </div>
+        <div>
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" style="border: 1px solid #ccc;" />
+        </div>
+        <!-- Add more input fields for additional parameters -->
+    </form>
 
-    <button id="generateButton" py-click="generateBaseballBat()" class="py-button">Generate Image</button>
+    <button id="generate-btn" py-click="generateImage()" class="py-button">Generate Image</button>
 
-    <div id="outputImage"></div>
+    <div id="image-container"></div>
 
-    <section class="pyscript">
+    <section class="pyscript"> 
         <div id="mpl"></div>
-
         <py-config>
             packages = [
                 "matplotlib",
@@ -44,33 +57,7 @@
                 "https://pyscript.net/latest/plugins/python/py_tutor.py"
             ]
         </py-config>
-
-        <script type="py">
-            import matplotlib.pyplot as plt
-            import numpy as np
-            import pandas as pd
-            from pyodide.http import open_url
-            from mpl_toolkits.axes_grid1 import make_axes_locatable
-
-            def predictBaseballBat(length, weight):
-                # Replace this with your prediction logic to generate baseball bat images
-                # You can use the input parameters (length, weight) to generate the image
-                # For now, let's just return a placeholder image
-                image = np.random.rand(100, 100)  # Placeholder image
-                return image
-
-            def generateBaseballBat():
-                length = float(Element('lengthInput').element.value)
-                weight = float(Element('weightInput').element.value)
-                baseball_bat_image = predictBaseballBat(length, weight)
-
-                fig, ax = plt.subplots()
-                ax.imshow(baseball_bat_image)
-                ax.set_title(f"Baseball Bat - Length: {length}, Weight: {weight}")
-                plt.colorbar(label="Colorbar", orientation="vertical")
-                display(fig, target="mpl")
-
-        </script>
     </section>
+
 </body>
 </html>
